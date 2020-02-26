@@ -1,5 +1,22 @@
 import React, { Component } from 'react';
-import { Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
+
+const styles = StyleSheet.create({
+    mainTitle : {
+        color: '#000000',
+        fontWeight: 'bold',
+        fontSize: 30,
+        marginTop: 20
+    },
+    introContainer: {
+        flex: 1,
+        overflow: 'hidden'
+    },
+    recipesListContainer: {
+        flex: 2,
+        paddingTop: 20
+    }
+});
 
 class GlowText extends Component{
     state = { textColor: '#000000' };
@@ -22,10 +39,11 @@ class GlowText extends Component{
 
 class RecipeListItem extends Component {
     render(){
+        const { width, height } = Dimensions.get('window');
         return (
-            <View>
+            <View style={{flex: 1}}>
                 <Text>{this.props.title}</Text>
-                <Image source={this.props.image} style={{width:'50%', height: 250}} />
+                <Image source={this.props.image} style={{ width: width * 0.8, height: height * 0.8 }} resizeMode={'cover'} />
             </View>
         );
     }
@@ -39,11 +57,18 @@ export default class InteractiveRecipes extends Component {
     let chickenImg = {uri: 'https://assets.bonappetit.com/photos/5d7296eec4af4d0008ad1263/master/pass/Basically-Gojuchang-Chicken-Recipe-Wide.jpg'}
 
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <GlowText text={title} />
-        <Image source={pic} style={{ width:'50%', height: 250 }} />
-        <Text>{listTitle}</Text>
-        <RecipeListItem title='Chicken' image={{chickenImg}} />
+      <View style={{ flex: 1, justifyContent: "flex-start", alignItems: "center" }}>
+        <View style={styles.introContainer}>
+            <Text style={styles.mainTitle}>{title}</Text>
+            <Image source={pic} style={{ width:250, height: 250 }} />
+        </View>
+
+        <View style={styles.recipesListContainer}>
+            <Text>{listTitle}</Text>
+            <RecipeListItem title='Chicken' image={{pic}} />
+        </View>
+
+
       </View>
     );
   }
