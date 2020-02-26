@@ -1,6 +1,25 @@
 import React, { Component } from 'react';
 import { Text, View, Image } from 'react-native';
 
+class GlowText extends Component{
+    state = { textColor: '#000000' };
+
+    componentDidMount(){
+
+        setInterval(() => (
+            this.setState(() => (
+                { textColor: 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')' }
+            ))
+        ), 1000);
+    };
+
+    render() {
+        return (
+            <Text style={{ color: this.state.textColor}} >{this.props.text}</Text>
+        );
+    }
+}
+
 class RecipeListItem extends Component {
     render(){
         return (
@@ -21,7 +40,7 @@ export default class InteractiveRecipes extends Component {
 
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>{title}</Text>
+        <GlowText text={title} />
         <Image source={pic} style={{ width:'50%', height: 250 }} />
         <Text>{listTitle}</Text>
         <RecipeListItem title='Chicken' image={{chickenImg}} />
